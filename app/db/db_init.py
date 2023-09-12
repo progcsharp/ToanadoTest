@@ -7,7 +7,7 @@ from sqlalchemy.orm import sessionmaker
 
 from app.config import config
 
-engine = create_engine(f'postgresql://{config["database"]["user"]}:{config["database"]["password"]}@{config["database"]["ip"]}:{config["database"]["port"]}/{config["database"]["db"]}', echo=True)
+engine = create_engine(f'postgresql://{config["database"]["user"]}:{config["database"]["password"]}@{config["database"]["ip"]}:{config["database"]["port"]}/{config["database"]["db"]}', echo=False)
 metadata = MetaData()
 Base = declarative_base(metadata=metadata)
 

@@ -12,10 +12,10 @@ def create_user(login: str, password: str) -> bool:
     return True
 
 
-def create_collect_data(_type: str, mutability: str, description: str, syntax_examples: str) -> bool:
+def create_collect_data(collect_data: list) -> bool:
     session = make_session()
-    collect_data = CollectData(type=_type, mutability=mutability,
-                               description=description, syntax_examples=syntax_examples)
+    collect_data = CollectData(type=collect_data[0], mutability=collect_data[1],
+                               description=collect_data[2], syntax_examples=collect_data[3])
     session.add(collect_data)
     session.commit()
     session.close()
