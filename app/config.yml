@@ -1,0 +1,15 @@
+database:
+  user: "postgres"
+  password: "147896325"
+  ip: "localhost"
+  port: "5432"
+  db: "test2"
+
+
+auth:
+  secret: "sdkvmslkvsldnvlskvskdnvsldknvdslk"
+  name: "mycookie"
+
+
+server:
+  port: 8000
