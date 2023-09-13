@@ -1,28 +1,59 @@
+import getopt
+
 import requests
+import sys
 from bs4 import BeautifulSoup
+from prettytable import PrettyTable
 
-from app.db.hendlers.create import create_collect_data
-from app.db.hendlers.delete import delete_collect_data
 
-delete_collect_data()
+def parse() -> list:
+    request = requests.get("https://en.wikipedia.org/wiki/Python_(programming_language)#Typing")
+    site = request.text
+    soup = BeautifulSoup(site, "html.parser")
+    table = soup.find("table", attrs={"class": "wikitable"})
+    table_body = table.find('tbody')
+    rows = table_body.find_all('tr')
+    return rows
 
-r = requests.get("https://en.wikipedia.org/wiki/Python_(programming_language)#Typing")
-s = r.text
-soup = BeautifulSoup(s, "html.parser")
-table = soup.find("table", attrs={"class":"wikitable"})
-table_body = table.find('tbody')
-rows = table_body.find_all('tr')
-for row in rows:
-    cols = row.find_all('td')
-    cols = [ele.text.strip() for ele in cols]
-    if cols:
-        print(cols)
-        create_collect_data(cols)
 
-# s = '\'Wikipedia\'"Wikipedia""""Spanning\nmultiple\nlines"""\nSpanning\nmultiple\nlines'
-# print(s)
-# for i in s:
-#     if i == '\n':
-#         s.replace("\n", "")
-# 
-# print(s)
+def table():
+    rows = parse()
+    th = ["Type", "Mutability", "Description" ,"Syntax examples"]
+    table_out = PrettyTable(th)
+    for row in rows:
+        cols = row.find_all('td')
+        cols = [ele.text.strip() for ele in cols]
+        if cols:
+            table_out.add_row(cols)
+    print(table_out)
+
+
+def database():
+    from app.db.hendlers.create import create_collect_data
+    from app.db.hendlers.delete import delete_collect_data
+
+    delete_collect_data()
+
+    rows = parse()
+
+    for row in rows:
+        cols = row.find_all('td')
+        cols = [ele.text.strip() for ele in cols]
+        if cols:
+            create_collect_data(cols)
+
+
+def main(argv: list):
+    opts, args = getopt.getopt(argv, "dry_run:", ["dry_run="])
+
+    opt, arg = opts[0]
+    print(opt == "--dry_run", bool(arg))
+    if opt == "--dry_run" and bool(arg):
+        table()
+    elif opt == " --dry_run" and not bool(arg):
+        database()
+    else:
+        print("error")
+
+
+main(sys.argv[1:])
