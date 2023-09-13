@@ -47,10 +47,9 @@ def main(argv: list):
     opts, args = getopt.getopt(argv, "dry_run:", ["dry_run="])
 
     opt, arg = opts[0]
-    print(opt == "--dry_run", bool(arg))
-    if opt == "--dry_run" and bool(arg):
+    if opt == "--dry_run" and arg == "True":
         table()
-    elif opt == " --dry_run" and not bool(arg):
+    elif opt == "--dry_run" and arg == "False":
         database()
     else:
         print("error")
