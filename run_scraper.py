@@ -57,5 +57,4 @@ def main(argv: list): # Функция для запуска парсера
     else:
         print("error: no parameter dry_run\n--dry_run True: output table to console\n--dry_run False: writing a table to a database") # Вывод ошибки
 
-
 main(sys.argv[1:])

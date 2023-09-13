@@ -1,0 +1,129 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Swagger Petstore - OpenAPI 3.0",
+    "version": "1.0.11"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8000"
+    }
+  ],
+  "tags": [
+    {
+      "name": "login",
+      "description": "login user",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "http://localhost:8000"
+      }
+    },
+    {
+      "name": "collect data",
+      "description": "receiving data",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "http://localhost:8000"
+      }
+    }
+  ],
+  "paths": {
+    "/login": {
+      "post": {
+        "tags": [
+          "login"
+        ],
+        "requestBody": {
+          "description": "login user",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/collect_data": {
+      "get": {
+        "tags": [
+          "collect data"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CollectData"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Login": {
+        "type": "object",
+        "properties": {
+          "login": {
+            "type": "string",
+            "example": "username"
+          },
+          "password": {
+            "type": "string",
+            "example": "password"
+          }
+        }
+      },
+      "LoginOut": {
+        "type": "object",
+        "properties": {
+          "authorized": {
+            "type": "boolean",
+            "example": true
+          }
+        }
+      },
+      "CollectData": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 0
+          },
+          "type": {
+            "type": "string",
+            "example": "bool"
+          },
+          "mutability": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "syntax_examples": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
