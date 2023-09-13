@@ -8,16 +8,16 @@ from app.endpoints.login import LoginHandler
 
 def make_app():
     return tornado.web.Application([
-        (r"/login", LoginHandler),
-        (r"/collect_data", CollectDataHandler)
+        (r"/login", LoginHandler), # Добавление url для авторизации
+        (r"/collect_data", CollectDataHandler) # Добавление url для получения данных
     ])
 
 
 async def main():
-    app = make_app()
-    app.listen(config["server"]["port"])
+    app = make_app() # Вызов функции для инициализации веб приложения
+    app.listen(config["server"]["port"]) # Определние слушающего порта
 
     await asyncio.Event().wait()
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    asyncio.run(main()) # Запуск приложения

@@ -7,18 +7,16 @@ from sqlalchemy.orm import sessionmaker
 
 from app.config import config
 
-engine = create_engine(f'postgresql://{config["database"]["user"]}:{config["database"]["password"]}@{config["database"]["ip"]}:{config["database"]["port"]}/{config["database"]["db"]}', echo=False)
+engine = create_engine(f'postgresql://{config["database"]["user"]}:{config["database"]["password"]}@{config["database"]["ip"]}:{config["database"]["port"]}/{config["database"]["db"]}', echo=False) # Соединение с бд
 metadata = MetaData()
 Base = declarative_base(metadata=metadata)
 
 
-def make_session():
+def make_session(): # Функция для открытия сесссии бд
     try:
-        print("Create transaction...")
         _engine = engine
         _Session = sessionmaker(bind=_engine)
         session = _Session()
-        print("Transaction created!")
         return session
     except:
         print(f"Couldn't create transaction!"
@@ -26,9 +24,10 @@ def make_session():
         raise sys.exc_info()
 
 
-class User(Base):
-    __tablename__ = "users"
+class User(Base): # Модель User
+    __tablename__ = "users" # Название таблицы в базе данных
 
+    # Поля модели User
     id = Column(Integer, primary_key=True)
     login = Column(String, nullable=False, unique=True)
     password = Column(String, nullable=False)
@@ -36,9 +35,10 @@ class User(Base):
     last_request = Column(DateTime)
 
 
-class CollectData(Base):
-    __tablename__ = "collected_data"
+class CollectData(Base): # Мщдель CollectData
+    __tablename__ = "collected_data" # Название таблицы в базе данных
 
+    # Поля модели CollectData
     id = Column(Integer, primary_key=True)
     type = Column(String)
     mutability = Column(String)
@@ -46,4 +46,4 @@ class CollectData(Base):
     syntax_examples = Column(String)
 
 
-metadata.create_all(engine)
+metadata.create_all(engine) # Создание таблиц в базе данных при запуске
