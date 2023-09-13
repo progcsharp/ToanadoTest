@@ -6,7 +6,7 @@ from bs4 import BeautifulSoup
 from prettytable import PrettyTable
 
 
-def parse() -> list: # Йункция для запроса на сайт и получения списка строк таблицы
+def parse() -> list: # Функция для запроса на сайт и получения списка строк таблицы
     request = requests.get("https://en.wikipedia.org/wiki/Python_(programming_language)#Typing") # get запрос на сайт
     site = request.text # Получение html сайта в string формате
     soup = BeautifulSoup(site, "html.parser") # Создание экземпляра класса BeautifulSoup
